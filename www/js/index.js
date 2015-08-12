@@ -21,41 +21,58 @@ function captureSuccess(s) {
     document.querySelector("#message").innerHTML = '';
     addMessage(JSON.stringify(s[0]));
 
-    //downloadImage(s[0].localURL,s[0].name);
-    //Move to app data directory
-    var succ = function (s) {
-        addMessage('-------succ!---------');
-        addMessage(JSON.stringify(s));
+    //Add new captured video
+    var v = "<div class='video-wrap'>";
+    v += "<video controls='controls'>";
+    v += "<source src='" + s[0].fullPath + "' type='video/mp4'>";
+    v += "</video>";
+    v += '<div class="row"><button class="btn btn-danger delete-video">Delete</button> </div>';
+    v += '</div>';
 
-        //Add new captured video
-        var v = "<div class='video-wrap'>";
-        v += "<video controls='controls'>";
-        v += "<source src='" + s.nativeURL + "' type='video/mp4'>";
-        v += "</video>";
-        v += '<div class="row"><button class="btn btn-danger delete-video">Delete</button> </div>';
-        v += '</div>';
+    var newdiv = document.createElement('div');
 
-        var newdiv = document.createElement('div');
+    var divIdName = 'video_'+s.name+'_div';
 
-        var divIdName = 'video_'+s.name+'_div';
+    newdiv.setAttribute('id',divIdName);
 
-        newdiv.setAttribute('id',divIdName);
+    newdiv.innerHTML = v;
 
-        newdiv.innerHTML = v;
+    document.querySelector("#videoArea").appendChild(newdiv);
 
-        document.querySelector("#videoArea").appendChild(newdiv);
-    }
-    var fail = function(err) {
-        console.log(err);
-        addMessage('-------err!---------');
-        addMessage(JSON.stringify(err));
-    }
+    ////Move to app data directory
+    //var succ = function (s) {
+    //    addMessage('-------succ!---------');
+    //    addMessage(JSON.stringify(s));
+    //
+    //    //Add new captured video
+    //    var v = "<div class='video-wrap'>";
+    //    v += "<video controls='controls'>";
+    //    v += "<source src='" + s.nativeURL + "' type='video/mp4'>";
+    //    v += "</video>";
+    //    v += '<div class="row"><button class="btn btn-danger delete-video">Delete</button> </div>';
+    //    v += '</div>';
+    //
+    //    var newdiv = document.createElement('div');
+    //
+    //    var divIdName = 'video_'+s.name+'_div';
+    //
+    //    newdiv.setAttribute('id',divIdName);
+    //
+    //    newdiv.innerHTML = v;
+    //
+    //    document.querySelector("#videoArea").appendChild(newdiv);
+    //}
+    //var fail = function(err) {
+    //    console.log(err);
+    //    addMessage('-------err!---------');
+    //    addMessage(JSON.stringify(err));
+    //}
 
-    window.resolveLocalFileSystemURI(s[0].fullPath, function(file) {
-        window.resolveLocalFileSystemURI(cordova.file.cacheDirectory, function(destination) {
-            file.copyTo(destination,"tmp_"+s[0].name,succ,fail);
-        },fail)
-    },fail);
+    //window.resolveLocalFileSystemURI(s[0].fullPath, function(file) {
+    //    window.resolveLocalFileSystemURI(cordova.file.cacheDirectory, function(destination) {
+    //        file.copyTo(destination,"tmp_"+s[0].name,succ,fail);
+    //    },fail)
+    //},fail);
 
 }
 
